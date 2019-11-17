@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
+#include <string.h>
 
 /* Autor: Brenda Montserrat López Castro
 Fecha: 16/11/2019
@@ -9,15 +10,14 @@ Horario: 9-11 a.m.
 Matrícula: 1744884
 */
 
-
-char invertir (char c[11]);
+void invertir (char c[]);
 
 //*********************Actividad 1******************************
 int main()
-{ 	char c[11]= "Hola mundo"; /*Declaración de variables, punteros y arreglos*/
+{ 	char c[11]; /*Declaración de variables, punteros y arreglos*/
 	FILE *A,*B;
-	A=fopen("archivo.txt","r"); /*abre el archivo en modo lectura con el comando r*/
-    B=fopen("archivo_alrevez.txt","w");  /*abre el archivo en modo escritura con el comando w*/
+	A=fopen("archivo.txt","r+"); /*abre el archivo en modo lectura con el comando r*/
+    B=fopen("archivo_alreves.txt","w+");  /*abre el archivo en modo escritura con el comando w*/
 	if((A == NULL) || (B == NULL)) /*verifica si el archivo está correctamente invertido*/
 		printf("Error.");
 	else
@@ -25,11 +25,16 @@ int main()
 		fgets(c,11,A); /*lee archivo A*/
 		while(!feof(A)) /*mientras no sea fin del archivo, se aplica la función de invertir*/
 		{
-			invertir(c[11]); /*función a aplicar*/
+			invertir(c); /*función a aplicar*/
 			fprintf(B,"%s",c); /*se muestra el archivo b en pantalla*/
 			fgets(c,11,A);  
 		}
+
+		printf("procesado");
+		fprintf(A,"%s","procesado");
 	}
+	fclose(A);
+	fclose(B);
 	fflush(stdin);
 	/************************************ACTIVIDAD 2***************************************************/
 	FILE *pfp,*fpf; /*declaración de variables y punteros*/
@@ -49,7 +54,7 @@ int main()
 	return 0; /*fin del programa*/
 }
 
-void invertir (char c[11]) /*función para invertir la cadena*/ 
+void invertir (char c[]) /*función para invertir la cadena*/ 
 { 
 	int i, j; /*Declaración de variables*/
 	char a;
